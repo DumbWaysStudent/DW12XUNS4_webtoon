@@ -12,17 +12,22 @@ class Login extends Component {
         password: null,
         showPass: true,
         validatedemail: false,
-        validatepass: false,
+        validatedpass: false,
         disableLogin: true,
       }
   }
 
-  componentDidMount() {
-  this.state.validatedemail && this.validatedpass ? 
-  this.state.disableLogin === false : this.state.disableLogin === false
+  handleDisable() {
+  if (this.state.validatedemail === true && this.state.validatedpass === true) 
+  {
+    this.setState({disableLogin: false})
+  } else { 
+    this.setState({disableLogin: true})
   }
+}
   
   handleEmail(useremail) {
+    this.state.useremail = useremail
 
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
     if(reg.test(useremail) === true)
@@ -33,33 +38,38 @@ class Login extends Component {
     }
     else {
       this.setState({
-        validatedemail:false,
+        validatedemail: false,
         })
       }
+
+    this.handleDisable()
     }
 
     handlePassword(password) {
+      this.state.password = password
+      console.log(password)
+      console.log(this.state.password)
     
-      let reg = /(?=.{8,})/ ;
+      let reg = /(?=.{7,})/ ;
       if(reg.test(password) === true)
       {
       this.setState({
         validatedpass: true,
-        disable: false});
+      });
         }
       else {
         this.setState({
           validatedpass:false,
-          disable: true})
+        })
         }
+      this.handleDisable()
       }
-
+  
     _onPress () {
       this.state.showPass === false
-      ? this.setState({showPass: true})
-      : this.setState({showPass: false})
+      ? this.state.showPass === true :
+      this.state.showPass === false
     }
-
   render () {
     return (
       <View style={styles.center}>
@@ -70,18 +80,19 @@ class Login extends Component {
         </View>
 
           <View style={styles.emailcontainer}>
-            <TextInput></TextInput>
-            style={{padding:12}}
+            <TextInput
             onChangeText={(useremail) => this.handleEmail(useremail)}
-            value={this.setState.useremail}
-            placeholder="Enter your email" />
+            value={this.state.useremail}
+            style={{padding:12}}
+            placeholder="Enter your email" >
+            </TextInput>
           </View>
 
           <View style={styles.passwordcontainer}>
             <TextInput
             onChangeText={(password) => this.handlePassword(password)}
             secureTextEntry={this.state.showPass}
-            value={this.setState.password}
+            value={this.state.password}
             style={{padding:12}} 
             placeholder="Enter your Password" />
             
@@ -96,8 +107,8 @@ class Login extends Component {
 
           <View>
             <TouchableOpacity
-            disabled={this.state.disable}
-            style={styles.button}>
+            disabled={this.state.disableLogin}
+            style={this.state.disableLogin ? styles.btn1 : styles.btn2}>
             <Text style={{fontSize: 10}}style={{fontSize: 18}}>Login</Text>
             </TouchableOpacity>
           </View>
@@ -153,18 +164,18 @@ const styles = StyleSheet.create ({
     alignItems: 'center',
     marginBottom: 30
   },
-  button: {
-    alignItems: 'center',
-    backgroundColor: '#ffffff',
-    padding: 15,
-    marginVertical: 50,
-    marginHorizontal: 100,
-    justifyContent: 'center',
-    elevation: 8,
-    borderRadius: 50,
-
+  btn1: {
     padding: 20,
-	backgroundColor: '#F35959',
+	  backgroundColor: '#ffffff',
+    borderRadius:50,
+    elevation: 9,
+    marginHorizontal: 80,
+    marginVertical: 40,
+    alignItems: 'center'
+  },
+  btn2:{
+    padding: 20,
+	  backgroundColor: '#F35959',
     borderRadius:50,
     elevation: 9,
     marginHorizontal: 80,
