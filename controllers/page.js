@@ -31,3 +31,17 @@ exports.store = (req, res) => {
         console.log(err)
     })
 }
+
+exports.delete = (req, res) => {
+    const {image_id, episode_id} =req.params
+    Image.destroy({
+        where: {id: image_id, episodeId: episode_id}
+    }).then(post=> {
+        res.send({
+            message: "success",
+            post
+        })
+    }).catch(err => {
+        console.log(err)
+    })
+}

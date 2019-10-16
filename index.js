@@ -21,17 +21,30 @@ app.group("/api/v1", (router) => {
 
     router.post('/login', AuthController.login)
     
-    router.post('/register', UserController.store)
-    router.get('/user/:user_id/webtoons', authenticated, UserController.show)
-    router.post('/user/:user_id/webtoon', authenticated, WebtoonController.store)
-    router.get('/user/:user_id/webtoon/:toon_id/episodes', authenticated, WebtoonController.show_user)
-    router.delete('/user/:user_id/webtoon/:toon_id/', authenticated, WebtoonController.delete)
-    router.put('/user/:user_id/webtoon/:toon_id/', authenticated, WebtoonController.update)
-    router.post('/user/:user_id/webtoon/:toon_id/episode', EpisodeController.store)
-    router.put('/user/:user_id/webtoon/:toon_id/episode/:episode_id', EpisodeController.update)
-    router.delete('/user/:user_id/webtoon/:toon_id/episode/:episode_id', EpisodeController.delete)
-    router.get('/user/:user_id/webtoon/:toon_id/episode/:episode_id/images', PageController.show)
-    router.post('/user/:user_id/webtoon/:toon_id/episode/:episode_id/images', PageController.store)
+    router.post('/register', 
+    UserController.store)
+    router.get('/user/:user_id/webtoons', 
+    authenticated, UserController.show)
+    router.post('/user/:user_id/webtoon', 
+    authenticated, WebtoonController.store)
+    router.get('/user/:user_id/webtoon/:toon_id/episodes', 
+    authenticated, WebtoonController.show_user)
+    router.delete('/user/:user_id/webtoon/:toon_id/', 
+    authenticated, WebtoonController.delete)
+    router.put('/user/:user_id/webtoon/:toon_id/', 
+    authenticated, WebtoonController.update)
+    router.post('/user/:user_id/webtoon/:toon_id/episode', 
+    authenticated, EpisodeController.store)
+    router.put('/user/:user_id/webtoon/:toon_id/episode/:episode_id', 
+    authenticated, EpisodeController.update)
+    router.delete('/user/:user_id/webtoon/:toon_id/episode/:episode_id', 
+    authenticated, EpisodeController.delete)
+    router.get('/user/:user_id/webtoon/:toon_id/episode/:episode_id/images', 
+    authenticated, PageController.show)
+    router.post('/user/:user_id/webtoon/:toon_id/episode/:episode_id/image', 
+    authenticated, PageController.store)
+    router.delete('/user/:user_id/webtoon/:toon_id/episode/:episode_id/image/:image_id', 
+    authenticated, PageController.delete)
 
 
     router.get('/webtoons', WebtoonController.index)
